@@ -281,4 +281,59 @@ gmr1_a5_1(uint8_t *key, uint32_t fn, int nbits, ubit_t *dl, ubit_t *ul)
 	}
 }
 
+
+/*
+ * Function to extract first 3 key-producing states from keystream generator
+ */
+void
+gmr1_a5_getstates(uint8_t *key, uint32_t fn, uint32_t states[3][4])
+{
+	uint32_t r[4];
+	uint8_t lkey[8];
+	int i,j;
+
+	/* Reorganize the key */
+	for (i=0; i<8; i++)
+		lkey[i] = key[i ^ 1];
+
+	/* Mix-in frame number */
+	lkey[6] ^= (fn & 0x0000f) <<  4; /* MFFN */
+	lkey[3] ^= (fn & 0x00030) <<  2; /* MultiFrame Number */
+	lkey[1] ^= (fn & 0x007c0) >>  3; /* SuperFrame Number */
+	lkey[0] ^= (fn & 0x0f800) >> 11; /* ... */
+	lkey[0] ^= (fn & 0x70000) >> 11; /* ... */
+
+	/* Init Rx */
+	r[0] = r[1] = r[2] = r[3] = 0;
+
+	/* Key mixing */
+	for (i=0; i<64; i++) {
+		int byte_idx = (i >> 3);
+		int bit_idx  = 7 - (i & 7);
+		uint32_t b = (lkey[byte_idx] >> bit_idx) & 1;
+
+		_a5_1_clock_force(r);
+
+		r[0] ^= b;
+		r[1] ^= b;
+		r[2] ^= b;
+		r[3] ^= b;
+	}
+
+	/* Set high bits */
+	_a5_1_set_bits(r);
+
+	/* Mixing */
+	for (i=0; i<250; i++)
+		_a5_1_clock(r);
+	//loop to extract first 3 keygen states, save in states array
+	for(i=0; i<3; i++){
+		for(j=0; j<4; j++){
+			states[i][j]=r[j];
+		}
+		_a5_1_clock(r);
+	}
+
+}
+
 /*! @} */
