@@ -43,7 +43,7 @@ void gmr1_a5_1(uint8_t *key, uint32_t fn, int nbits,
 /*
  * Function to extract first 3 key-producing states from keystream generator
  */
-void gmr1_a5_getstates(uint8_t *key, uint32_t fn, uint32_t states[3][4]);
+void gmr1_a5_getstates(uint8_t *key, uint32_t fn, uint32_t states[2][4]);
 
 /*! @} */
 

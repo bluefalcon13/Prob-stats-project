@@ -286,7 +286,7 @@ gmr1_a5_1(uint8_t *key, uint32_t fn, int nbits, ubit_t *dl, ubit_t *ul)
  * Function to extract first 3 key-producing states from keystream generator
  */
 void
-gmr1_a5_getstates(uint8_t *key, uint32_t fn, uint32_t states[3][4])
+gmr1_a5_getstates(uint8_t *key, uint32_t fn, uint32_t states[2][4])
 {
 	uint32_t r[4];
 	uint8_t lkey[8];
@@ -327,7 +327,7 @@ gmr1_a5_getstates(uint8_t *key, uint32_t fn, uint32_t states[3][4])
 	for (i=0; i<250; i++)
 		_a5_1_clock(r);
 	//loop to extract first 3 keygen states, save in states array
-	for(i=0; i<3; i++){
+	for(i=0; i<2; i++){
 		for(j=0; j<4; j++){
 			states[i][j]=r[j];
 		}
