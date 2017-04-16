@@ -17,7 +17,7 @@ Using this program:
 
 In order to properly use this program, the osmocom-gmr project code should be installed, 
 particularly the "libosmocore" setup.  This is because there are headers called that reside within
-this group of modules.  Please see <http://http://osmocom.org/projects/gmr/wiki/GettingStarted> 
+this group of modules.  Please see <http://osmocom.org/projects/gmr/wiki/GettingStarted> 
 for more infomation on this process.
 
 <<<<<<<< currently work in progress>>>>>>>>> 
