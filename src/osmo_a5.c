@@ -327,7 +327,7 @@ gmr1_a5_getstates(uint8_t *key, uint32_t fn, uint32_t states[2][4])
 	for (i=0; i<250; i++)
 		_a5_1_clock(r);
 	//loop to extract first 3 keygen states, save in states array
-	for(i=0; i<2; i++){
+	for(i=0; i<1; i++){
 		for(j=0; j<4; j++){
 			states[i][j]=r[j];
 		}
